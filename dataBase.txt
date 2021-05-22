@@ -1,12 +1,13 @@
 user
 
 - id INT NOT NULL AUTO_INCREMENT
-- regTime DATETIME NOT NULL
+- reg_time DATETIME NOT NULL
 - session_id VARCHAR(255) NOT NULL
 - name VARCHAR(255) NOT NULL
 
 message
 
-- mesTime DATETIME NOT NULL
-- senderName VARCHAR(255) NOT NULL
-- text VARCHAR()
+- id INT NOT NULL AUTO_INCREMENT
+- user_id INT NOT NULL
+- time DATETIME NOT NULL
+- message TEXT NOT NULL
