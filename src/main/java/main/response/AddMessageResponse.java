@@ -1,7 +1,5 @@
 package main.response;
 
-import java.util.Date;
-
 public class AddMessageResponse {
     private boolean result;
     private String time;

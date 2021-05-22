@@ -12,8 +12,10 @@ import org.springframework.web.context.request.RequestContextHolder;
 
 import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 @RestController
 public class ChatController {
@@ -69,6 +71,39 @@ public class ChatController {
         AddMessageResponse response = new AddMessageResponse();
         response.setResult(true);
         response.setTime(formatter.format(time));
+        return response;
+    }
+
+    @GetMapping(path = "/api/messages")
+    public HashMap<String, List> getMessages() {
+        ArrayList<MessageResponse> messagesList =
+                new ArrayList<>();
+        Iterable<Message> messages = messageRepository.findAll();
+        for(Message message : messages) {
+            MessageResponse messageItem = new MessageResponse();
+            messageItem.setName(message.getUser().getName());
+            messageItem.setTime(
+                    formatter.format(message.getSendTime())
+            );
+            messageItem.setText(message.getText());
+            messagesList.add(messageItem);
+        }
+        HashMap<String, List> response = new HashMap<>();
+        response.put("messages", messagesList);
+        return response;
+    }
+
+    @GetMapping(path = "/api/users")
+    public HashMap<String, List> getUsers(){
+        ArrayList<UserResponse> userList = new ArrayList<>();
+        Iterable<User> users = userRepository.findAll();
+        for (User user : users) {
+            UserResponse userItem = new UserResponse();
+            userItem.setName(user.getName());
+            userList.add(userItem);
+        }
+        HashMap<String, List> response = new HashMap<>();
+        response.put("messages", userList);
         return response;
     }
 

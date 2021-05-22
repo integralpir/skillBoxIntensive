@@ -3,8 +3,8 @@ $(function(){
     var userName = 'Юзер';
 
     let initChat = function() {
-        //load messages
-        //loadUsers();
+        loadMessages();
+        loadUsers();
     };
 
     let loadUsers = function() {
@@ -15,6 +15,20 @@ $(function(){
                 let userItem = $('<div class="user-item"></div>');
                 userItem.text(users[i].name);
                 usersList.append(userItem);
+            }
+        });
+    };
+
+    let loadMessages = function() {
+        let messagesList = $('.messages-list');
+        $.get('/api/messages', function(response) {
+            let messages = response.messages;
+            for(let i in messages) {
+                let messageItem = $('<div class="message"><b>' +
+                    messages[i].time + "&nbsp;" +
+                    messages[i].name +
+                    '</b> ' + messages[i].text + '</div>');
+                messagesList.append(messageItem);
             }
         });
     };
